@@ -1,4 +1,4 @@
 CREATE TABLE pokemon (
     pokemon_id character varying(36) NOT NULL,
-    value character varying(255)
+    poke_json jsonb not null default '{}'::jsonb
 );
