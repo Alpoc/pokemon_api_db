@@ -7,7 +7,7 @@ import json
 # import sqlalchemy
 from flask_sqlalchemy import SQLAlchemy
 
-from sqlalchemy.dialects.postgresql import JSONB
+from sqlalchemy.dialects.postgresql import JSON
 
 # from sqlalchemy import SQLAlchemy
 # from flask_migrate import Migrate
@@ -22,7 +22,9 @@ db = SQLAlchemy(app)
 class Pokemon(db.Model):
     __tablename__ = 'pokemon'
     pokemon_id = db.Column(db.String, primary_key=True, nullable=False)
-    poke_json = db.Column(db.JSONB, nullable=False)
+    # for some reason JSONB is not supported? would be faster for queries.
+    poke_json = db.Column(db.JSON, nullable=False)
+
 
     def __init__(self, id, json_string):
         self.pokemon_id = id
