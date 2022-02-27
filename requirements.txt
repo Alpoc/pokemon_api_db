@@ -1,3 +1,8 @@
+python3.6
+pytest
 flask
 flask_restful
 requests
+Flask-Script
+Flask-SQLAlchemy
+psycopg2-binary

@@ -3,6 +3,7 @@
 # Dev installs for when not using docker
 ## base installs
 sudo apt-get install python3.6
+pip install pytest
 
 ## flask installs
 sudo apt-get install python3-venv
