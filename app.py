@@ -13,6 +13,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://docker:docker@172.17.0.2:5
 db = SQLAlchemy(app)
 logging.basicConfig(filename='logs/html.log',level=logging.DEBUG)
 
+
 @app.route('/')
 def hello():
     return "Hello and welcome to your new pokedex"
@@ -34,11 +35,17 @@ def fetch_balb(value):
 def print_balb_db(name):
     logging.info('DB fetch requested, value: ' + name)
     dba = DatabaseActions()
-    return str(dba.query_by_name(name).name + ' pulled from DB')
+    name_from_db = dba.query_by_name(name).name
+    if name_from_db:
+        return str( + ' pulled from DB')
+    else:
+        return 'could not locate ' + name + '. Please request a db update'
+
 
 def create_app():
     db.create_all()
     app.run(debug=True, host='0.0.0.0')
+
 
 if __name__ == '__main__':
     create_app()
