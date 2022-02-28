@@ -9,7 +9,7 @@ from pokemon_api.pokemon_api import PokemonAPI
 
 app = Flask(__name__)
 #                                                     username:pw                  db_name
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://docker:docker@172.17.0.2:5432/docker'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://docker:docker@poke_db:5432/docker'
 db = SQLAlchemy(app)
 logging.basicConfig(filename='logs/html.log',level=logging.DEBUG)
 
@@ -35,9 +35,9 @@ def fetch_balb(value):
 def print_balb_db(name):
     logging.info('DB fetch requested, value: ' + name)
     dba = DatabaseActions()
-    name_from_db = dba.query_by_name(name).name
-    if name_from_db:
-        return str( + ' pulled from DB')
+    poke_obj = dba.query_by_name(name)
+    if poke_obj:
+        return str(poke_obj.name + ' pulled from DB')
     else:
         return 'could not locate ' + name + '. Please request a db update'
 

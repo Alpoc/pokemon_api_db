@@ -1,13 +1,18 @@
+version: "3"
 services:
-
-  poke_db:
-    build: database/
-    ports:
-      - "5432:5432"
-
   poke_flask:
-    build: .
+    container_name: poke_flask_container
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "5000:5000"
-    depends_on:
+    links:
       - poke_db
+  poke_db:
+    container_name: poke_db_container
+    build:
+      context: ./database/
+      dockerfile: Dockerfile_db
+    ports:
+      - "5432:5432"
