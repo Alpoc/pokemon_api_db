@@ -1,0 +1,80 @@
+info:
+  version: "1.0.0"
+  title: "Pokemon DB API"
+basePath: "/api/v1"
+tags:
+  - name: "pokemon"
+schemes:
+  - "https"
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+paths:
+  /poke_db/<peokemon_name>:
+    get:
+      tags:
+        - "pokemon"
+      summary: "Get a pokemon from the DB"
+      operationId: "query_by_name"
+      parameters:
+        - name: "poke_name"
+          in: "path"
+          description: "The name of the pokemon to retrieve"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Successfully retrived pet"
+          schema:
+            $ref: "#/definitions/Pet"
+        404:
+          description: "Requested DB query by name NOT found"
+
+  /api_fetch/<value>:
+    put:
+      tags:
+        - "pokemon"
+      summary: "Add new pokemon to the Database"
+      operationId: "insert_poke_into_db"
+      parameters:
+        - name: "pokemon_id"
+          in: "pokemon_id"
+          description: "The id of the pokemon to update from the store"
+          required: true
+          type: "string"
+        - name: "pokemon_name"
+          in: "string"
+          required: true
+        -name: "pokemon_json"
+          in: "JSON"
+          required: true
+          schema:
+            $ref: "#/definitions/Pokemon"
+      responses:
+        200:
+          description: "Successfully added pokemon"
+definitions:
+  Pets:
+    type: array
+    items:
+      $ref: "#/definitions/Pokemon"
+  Pet:
+    type: "object"
+    required:
+      - "id"
+      - "name"
+      - "jsos_sting"
+    properties:
+      id:
+        type: "integer"
+        format: "string"
+      name:
+        type: "string"
+      json_string:
+        type: "string"
+        format: "JSON"
+    example:
+      id: 1
+      name: "balbasaur"
+      json_string: {id: '1', name: "balubasaur", etc: {{}}}

@@ -7,7 +7,6 @@ import logging
 class PokemonAPI(Resource):
     logging.basicConfig(filename='logs/pokemon_api.log',level=logging.DEBUG)
 
-
     def fetch_pokemon(value):
         url = path.join('https://pokeapi.co/api/v2/pokemon', value.lower())
         req = requests.get(url)

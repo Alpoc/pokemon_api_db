@@ -1,20 +1,21 @@
 import pytest
 import sys
 
-sys.path.append('..')
+# rootdir is app so not sure why this is needed...
+# sys.path.append('..')
+import poke_app
 
-from app import create_app
 
 @pytest.fixture()
 def app():
-    app = create_app()
+    app = poke_app.create_app()
     app.config.update({
         "TESTING": True,
     })
 
     # other setup can go here
 
-    yield app
+    return app
 
     # clean up / reset resources here
 
