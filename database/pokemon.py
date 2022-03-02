@@ -11,7 +11,7 @@ db = SQLAlchemy(app)
 
 class Pokemon(db.Model):
     __tablename__ = 'pokemon'
-    pokemon_id = db.Column(db.String, primary_key=True, nullable=False)
+    pokemon_id = db.Column(db.Integer, primary_key=True, nullable=False)
     name = db.Column(db.String, nullable=False)
     poke_json = db.Column(db.JSON, nullable=False)
 

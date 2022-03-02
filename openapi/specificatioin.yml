@@ -42,11 +42,11 @@ paths:
           in: "pokemon_id"
           description: "The id of the pokemon to update from the store"
           required: true
-          type: "string"
-        - name: "pokemon_name"
+          type: Integer
+        - name: "name"
           in: "string"
           required: true
-        -name: "pokemon_json"
+        -name: "poke_json"
           in: "JSON"
           required: true
           schema:
@@ -54,6 +54,8 @@ paths:
       responses:
         200:
           description: "Successfully added pokemon"
+        418:
+          description: "Im a teapot, already present in db"
 definitions:
   Pets:
     type: array
@@ -77,4 +79,4 @@ definitions:
     example:
       id: 1
       name: "balbasaur"
-      json_string: {id: '1', name: "balubasaur", etc: {{}}}
+      json_string: {id: 1, name: "balubasaur", etc: {{}}}

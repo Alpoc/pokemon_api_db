@@ -1,7 +1,6 @@
 # app.py - Pokemon flask api using flask_restful
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-
 import logging
 
 from database.database_actions import DatabaseActions
@@ -22,11 +21,14 @@ def hello():
 @app.route('/api_fetch/<path:value>')
 def fetch_balb(value):
     logging.info('api fetch requested, value: ' + value)
-    poke_id, name, poke_json = PokemonAPI.fetch_pokemon(value)
-    if poke_id:
+    poke, response_code = PokemonAPI.fetch_pokemon(value)
+    if response_code == 200:
         dba = DatabaseActions()
-        response = dba.insert_poke_into_db(poke_id, name, poke_json)
-        return "{} pulled from API!".format(poke_json['name'])
+        _, response = dba.insert_poke_into_db(poke)
+        if response != 201:
+            logging.error('something went wrong trying to insert pulled poke')
+
+        return "{} pulled from API!: ".format(poke.name) + str(response)
     else:
         return "could not pull from api"
 
@@ -35,11 +37,17 @@ def fetch_balb(value):
 def print_balb_db(name):
     logging.info('DB fetch requested, value: ' + name)
     dba = DatabaseActions()
-    poke_obj, response_code = dba.query_by_name(name)
+    try:
+        name = int(name)
+        poke_obj, response_code = dba.query_by_id(name)
+    except:
+        pass
+        poke_obj, response_code = dba.query_by_name(name)
+
     if response_code == 200:
         return str(poke_obj.name + ' pulled from DB')
     else:
-        return 'could not locate ' + name + '. Please request a db update'
+        return 'could not locate ' + str(name) + '. Please request a db update'
 
 
 def create_app():

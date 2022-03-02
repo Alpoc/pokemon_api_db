@@ -1,6 +1,7 @@
+from flask_restful import Resource
+from database.pokemon import Pokemon
 from os import path
 import requests
-from flask_restful import Resource
 import logging
 
 
@@ -11,12 +12,13 @@ class PokemonAPI(Resource):
         url = path.join('https://pokeapi.co/api/v2/pokemon', value.lower())
         req = requests.get(url)
         try:
-            poke = req.json()
-            id = poke['id']
-            name = poke['name']
-            return id, name, poke
+            poke_json = req.json()
+            id = poke_json['id']
+            name = poke_json['name']
+            poke = Pokemon(id, name, poke_json)
+            return poke, 200
 
         except Exception as e:
             logging.error('Was not able to fetch from api')
             logging.error(e)
-            return False, False, False
+            return None, 404

@@ -9,6 +9,8 @@ services:
       - "5000:5000"
     links:
       - poke_db
+    depends_on:
+      - poke_db
   poke_db:
     container_name: poke_db_container
     build:
