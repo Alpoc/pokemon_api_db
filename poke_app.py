@@ -2,7 +2,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import logging
-
+from flask import jsonify
 from database.database_actions import DatabaseActions
 from pokemon_api.pokemon_api import PokemonAPI
 
@@ -28,7 +28,7 @@ def fetch_balb(value):
         if response != 201:
             logging.error('something went wrong trying to insert pulled poke')
 
-        return "{} pulled from API!: ".format(poke.name) + str(response)
+        return jsonify(poke.as_dict()), response
     else:
         return "could not pull from api"
 
@@ -45,9 +45,9 @@ def print_balb_db(name):
         poke_obj, response_code = dba.query_by_name(name)
 
     if response_code == 200:
-        return str(poke_obj.name + ' pulled from DB')
+        return poke_obj.as_dict(), response_code
     else:
-        return 'could not locate ' + str(name) + '. Please request a db update'
+        return 'could not locate ' + str(name) + '. Please request a db update', response_code
 
 
 def create_app():

@@ -25,9 +25,9 @@ paths:
           type: "string"
       responses:
         200:
-          description: "Successfully retrived pet"
+          description: "Successfully retrived pet, returns pokemon json"
           schema:
-            $ref: "#/definitions/Pet"
+            $ref: "#/definitions/Pokemon"
         404:
           description: "Requested DB query by name NOT found"
 
@@ -38,22 +38,16 @@ paths:
       summary: "Add new pokemon to the Database"
       operationId: "insert_poke_into_db"
       parameters:
-        - name: "pokemon_id"
-          in: "pokemon_id"
-          description: "The id of the pokemon to update from the store"
-          required: true
-          type: Integer
-        - name: "name"
-          in: "string"
-          required: true
-        -name: "poke_json"
-          in: "JSON"
+        - name: "value"
+          description: "The id or name of the pokemon to update from the api"
+          in: "path"
+          type: "string"
           required: true
           schema:
             $ref: "#/definitions/Pokemon"
       responses:
         200:
-          description: "Successfully added pokemon"
+          description: "Successfully added pokemon, returns pokemon json"
         418:
           description: "Im a teapot, already present in db"
 definitions:

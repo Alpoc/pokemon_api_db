@@ -26,3 +26,9 @@ class Pokemon(db.Model):
         string = 'Pokemon ID: ' + str(self.pokemon_id) + '\n' \
                + 'Pokemon name: ' + str(self.name) + '\n'
         return string
+
+
+    def as_dict(self):
+       return {'pokemon_id': self.pokemon_id,
+               'name': self.name,
+               'poke_json': self.poke_json}
