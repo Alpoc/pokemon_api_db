@@ -1,7 +1,8 @@
+swagger: "2.0"
 info:
   version: "1.0.0"
   title: "Pokemon DB API"
-basePath: "/api/v1"
+basePath: "/specs"
 tags:
   - name: "pokemon"
 schemes:
@@ -11,14 +12,14 @@ consumes:
 produces:
   - "application/json"
 paths:
-  /poke_db/<peokemon_name>:
+  /poke_db/{pokemon_name}:
     get:
       tags:
         - "pokemon"
       summary: "Get a pokemon from the DB"
       operationId: "query_by_name"
       parameters:
-        - name: "poke_name"
+        - name: "pokemon_name"
           in: "path"
           description: "The name of the pokemon to retrieve"
           required: true
@@ -31,7 +32,7 @@ paths:
         404:
           description: "Requested DB query by name NOT found"
 
-  /api_fetch/<value>:
+  /api_fetch/{value}:
     put:
       tags:
         - "pokemon"
@@ -43,19 +44,13 @@ paths:
           in: "path"
           type: "string"
           required: true
-          schema:
-            $ref: "#/definitions/Pokemon"
       responses:
         200:
           description: "Successfully added pokemon, returns pokemon json"
         418:
           description: "Im a teapot, already present in db"
 definitions:
-  Pets:
-    type: array
-    items:
-      $ref: "#/definitions/Pokemon"
-  Pet:
+  Pokemon:
     type: "object"
     required:
       - "id"
@@ -74,3 +69,7 @@ definitions:
       id: 1
       name: "balbasaur"
       json_string: {id: 1, name: "balubasaur", etc: {{}}}
+
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"

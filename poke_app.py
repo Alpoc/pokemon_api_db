@@ -1,15 +1,18 @@
 # app.py - Pokemon flask api using flask_restful
-from flask import Flask
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 import logging
 from flask import jsonify
 from database.database_actions import DatabaseActions
 from pokemon_api.pokemon_api import PokemonAPI
 import time
+from os import path
+# import yaml
 
 app = Flask(__name__)
 #                                                     username:pw                  db_name
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://docker:docker@poke_db:5432/docker'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://docker:docker@127.0.0.1:5432/docker'
 db = SQLAlchemy(app)
 logging.basicConfig(filename='logs/html.log',level=logging.DEBUG)
 
@@ -49,6 +52,10 @@ def print_balb_db(name):
         return poke_obj.as_dict(), response_code
     else:
         return 'could not locate ' + str(name) + '. Please request a db update', response_code
+
+@app.route('/specs')
+def return_speficication():
+    return render_template('specifications.html')
 
 
 def create_app():
