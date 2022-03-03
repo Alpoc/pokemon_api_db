@@ -11,11 +11,5 @@ The two exposed URLs are
  - docker-compose
 
 ## Run Commands
-### there is a bug that docker-compose depends_on is not working for my flask app.
-so docker-compose up is used twice.
-
  - docker-compose build
  - docker-compose up
-
- ### after its up and running you can also run unit tests with
-  - docker exec -it poke_flask_container py.test
