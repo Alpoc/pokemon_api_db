@@ -16,8 +16,6 @@ so docker-compose up is used twice.
 
  - docker-compose build
  - docker-compose up
- - ctrl z
- - docker-compose up
 
  ### after its up and running you can also run unit tests with
   - docker exec -it poke_flask_container py.test
