@@ -5,6 +5,7 @@ import logging
 from flask import jsonify
 from database.database_actions import DatabaseActions
 from pokemon_api.pokemon_api import PokemonAPI
+import time
 
 app = Flask(__name__)
 #                                                     username:pw                  db_name
@@ -57,4 +58,7 @@ def create_app():
 
 
 if __name__ == '__main__':
+    # This is used in a pinch to get docker compose to behave correctly.
+    # wait-for-it is not working since docker compose is using python.
+    time.sleep(1)
     create_app()
