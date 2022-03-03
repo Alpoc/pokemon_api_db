@@ -23,12 +23,17 @@ def hello():
 
 
 @app.route('/api_fetch/<path:value>')
-def fetch_balb(value):
+def fetch_api_poke(value):
+    """
+    pull pokemon from api and insert into database
+    :param value: value from http request
+    :return: poke json or string
+    """
     logging.info('api fetch requested, value: ' + value)
     poke, response_code = PokemonAPI.fetch_pokemon(value)
     if response_code == 200:
         dba = DatabaseActions()
-        _, response = dba.insert_poke_into_db(poke)
+        response = dba.insert_poke_into_db(poke)
         if response != 201:
             logging.error('something went wrong trying to insert pulled poke')
 
@@ -38,7 +43,12 @@ def fetch_balb(value):
 
 
 @app.route('/poke_db/<path:name>')
-def print_balb_db(name):
+def render_db_poke(name):
+    """
+    Renders pokemon json from database
+    :param name: http request
+    :return: poke json or string
+    """
     logging.info('DB fetch requested, value: ' + name)
     dba = DatabaseActions()
     try:
@@ -54,7 +64,7 @@ def print_balb_db(name):
         return 'could not locate ' + str(name) + '. Please request a db update', response_code
 
 @app.route('/specs')
-def return_speficication():
+def return_specification():
     return render_template('specifications.html')
 
 

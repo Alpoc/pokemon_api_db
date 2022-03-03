@@ -15,20 +15,18 @@ class Pokemon(db.Model):
     name = db.Column(db.String, nullable=False)
     poke_json = db.Column(db.JSON, nullable=False)
 
-
-    def __init__(self, id, pokemon_name, json_string):
-        self.pokemon_id = id
+    def __init__(self, poke_id, pokemon_name, json_string):
+        self.pokemon_id = poke_id
         self.name = pokemon_name
         self.poke_json = json_string
 
-
+    @property
     def __repr__(self):
         string = 'Pokemon ID: ' + str(self.pokemon_id) + '\n' \
-               + 'Pokemon name: ' + str(self.name) + '\n'
+                 + 'Pokemon name: ' + str(self.name) + '\n'
         return string
 
-
     def as_dict(self):
-       return {'pokemon_id': self.pokemon_id,
-               'name': self.name,
-               'poke_json': self.poke_json}
+        return {'pokemon_id': self.pokemon_id,
+                'name': self.name,
+                'poke_json': self.poke_json}

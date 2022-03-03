@@ -14,8 +14,8 @@ class DatabaseActions():
     def query_by_name(self, poke_name):
         """
         Add a poke to the database
-        :param pokemon_name: string name of pokemon to get
-        :rtype: Pokemon object
+        :param poke_name: string name of pokemon to get
+        :rtype: Pokemon object, response code integer
         """
         pokemon = self.db.session.query(Pokemon).filter(Pokemon.name == poke_name).first()
         if pokemon == None:
@@ -29,7 +29,7 @@ class DatabaseActions():
     def query_by_id(self, poke_id):
         """
         Add a poke to the database
-        :param pokemon_name: string name of pokemon to get
+        :param poke_id: string id of pokemon to get
         :rtype: Pokemon object
         """
         pokemon = self.db.session.query(Pokemon).filter(Pokemon.pokemon_id == poke_id).first()
@@ -45,10 +45,8 @@ class DatabaseActions():
         """
         Add a poke to the database
 
-        :param pokemon_id: Pet to add to the store
-        :param name: string name of the pokemon_name
-        :param pokemon_json: raw json from pokemon web api
-        :rtype: None
+        :param poke: Pokemon object
+        :rtype: response code
         """
         _, response_code = self.query_by_name(poke.name)
         if response_code == 404:
@@ -57,5 +55,5 @@ class DatabaseActions():
             logging.info('Inserted new pokemon into DB: ' + poke.name)
         else:
             logging.info('Attempted pokemon insert already exists: ' + poke.name)
-            return {}, 418
-        return {}, 201
+            return 418
+        return 201
