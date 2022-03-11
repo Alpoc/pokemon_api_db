@@ -24,3 +24,6 @@
 - ensure that all logging is working
 - consider more conventional dir and file naming convention
 - further clean up code
+- ensure that spec sheet is correct
+- clean up templates dir once a good solution is found
+- make sure all params are still correct
